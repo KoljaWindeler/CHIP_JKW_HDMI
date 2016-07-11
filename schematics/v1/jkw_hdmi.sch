@@ -8070,10 +8070,6 @@ Source: AVX .. aphvc.pdf</description>
 <wire x1="220.98" y1="96.52" x2="215.9" y2="96.52" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="J1" gate="G$1" pin="GND@7"/>
-<wire x1="220.98" y1="71.12" x2="215.9" y2="71.12" width="0.1524" layer="91"/>
-</segment>
-<segment>
 <pinref part="J1" gate="G$1" pin="GND@8"/>
 <wire x1="220.98" y1="48.26" x2="214.63" y2="48.26" width="0.1524" layer="91"/>
 </segment>
@@ -8218,6 +8214,10 @@ Source: AVX .. aphvc.pdf</description>
 <segment>
 <pinref part="GND22" gate="1" pin="GND"/>
 <pinref part="C17" gate="G$1" pin="2"/>
+</segment>
+<segment>
+<pinref part="J1" gate="G$1" pin="GND@7"/>
+<wire x1="220.98" y1="71.12" x2="215.9" y2="71.12" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="LCD-D3" class="0">
@@ -8565,10 +8565,7 @@ Source: AVX .. aphvc.pdf</description>
 </net>
 <net name="VCC_5V_DCC" class="0">
 <segment>
-<wire x1="137.16" y1="7.62" x2="137.16" y2="93.98" width="0.1524" layer="91"/>
-<pinref part="J1" gate="G$1" pin="VCC-5V@1"/>
-<wire x1="137.16" y1="93.98" x2="157.48" y2="93.98" width="0.1524" layer="91"/>
-<wire x1="137.16" y1="7.62" x2="-116.84" y2="7.62" width="0.1524" layer="91"/>
+<wire x1="271.78" y1="7.62" x2="-116.84" y2="7.62" width="0.1524" layer="91"/>
 <wire x1="-116.84" y1="7.62" x2="-116.84" y2="12.7" width="0.1524" layer="91"/>
 <pinref part="U$2" gate="G$1" pin="VCC5V"/>
 <wire x1="-116.84" y1="12.7" x2="-116.84" y2="50.8" width="0.1524" layer="91"/>
@@ -8577,6 +8574,9 @@ Source: AVX .. aphvc.pdf</description>
 <wire x1="-127" y1="10.16" x2="-127" y2="12.7" width="0.1524" layer="91"/>
 <wire x1="-127" y1="12.7" x2="-116.84" y2="12.7" width="0.1524" layer="91"/>
 <junction x="-116.84" y="12.7"/>
+<pinref part="J1" gate="G$1" pin="VCC-5V@2"/>
+<wire x1="254" y1="96.52" x2="271.78" y2="96.52" width="0.1524" layer="91"/>
+<wire x1="271.78" y1="7.62" x2="271.78" y2="96.52" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="TX2-" class="0">
