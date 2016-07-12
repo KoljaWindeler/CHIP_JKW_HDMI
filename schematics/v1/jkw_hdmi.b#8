@@ -2751,9 +2751,7 @@ design rules under a new name.</description>
 <element name="J2" library="CHIP_HDMI" package="T_MOLEX_45171" value="T_MOLEX_45171" x="31.9405" y="2.667" smashed="yes">
 <attribute name="VALUE" x="23.9405" y="-0.573" size="2.032" layer="27" font="vector" ratio="13" rot="SR0"/>
 </element>
-<element name="R1" library="rcl" package="M0805" value="5.1k" x="19.1135" y="42.545" smashed="yes" rot="R180">
-<attribute name="NAME" x="19.431" y="41.275" size="1.27" layer="25" rot="R180"/>
-</element>
+<element name="R1" library="rcl" package="M0805" value="5.1k" x="19.1135" y="42.545" smashed="yes" rot="R180"/>
 <element name="U$2" library="SII164CTG64" package="DIL24" value="TPD12S016" x="31.877" y="21.463" rot="R180"/>
 <element name="C1" library="rcl" package="C0805" value="100nF" x="42.3545" y="16.129" rot="R270"/>
 <element name="C2" library="rcl" package="C0805" value="100nF" x="25.9715" y="17.526" rot="R180"/>
@@ -2762,15 +2760,9 @@ design rules under a new name.</description>
 <attribute name="NAME" x="25.8445" y="30.9245" size="1.27" layer="25" rot="R180"/>
 <attribute name="VALUE" x="22.86" y="32.893" size="1.27" layer="27" rot="R180"/>
 </element>
-<element name="R3" library="rcl" package="M0805" value="na" x="18.6055" y="46.7995" smashed="yes" rot="R180">
-<attribute name="NAME" x="22.86" y="46.9265" size="1.27" layer="25" rot="R180"/>
-</element>
-<element name="R4" library="rcl" package="M0805" value="na" x="18.6055" y="44.7675" smashed="yes" rot="R180">
-<attribute name="NAME" x="24.4475" y="45.212" size="1.27" layer="25" rot="R180"/>
-</element>
-<element name="C5" library="rcl" package="C0805" value="10pF" x="22.7965" y="48.006" smashed="yes">
-<attribute name="NAME" x="24.765" y="48.387" size="1.27" layer="25"/>
-</element>
+<element name="R3" library="rcl" package="M0805" value="na" x="18.6055" y="46.7995" smashed="yes" rot="R180"/>
+<element name="R4" library="rcl" package="M0805" value="na" x="18.6055" y="44.7675" smashed="yes" rot="R180"/>
+<element name="C5" library="rcl" package="C0805" value="10pF" x="22.7965" y="48.006" smashed="yes"/>
 <element name="C6" library="rcl" package="C0805" value="4.7u" x="24.0665" y="51.943" smashed="yes" rot="R90"/>
 <element name="C7" library="rcl" package="C0805" value="10uF" x="18.8595" y="51.943" smashed="yes" rot="R270"/>
 <element name="C4" library="rcl" package="C0805" value="10pF" x="20.2565" y="38.862" rot="R270"/>
@@ -2813,7 +2805,7 @@ design rules under a new name.</description>
 <element name="U$3" library="logo" package="LOGO_10X10_SILK" value="LOGO_10X10_SILK" x="38.7985" y="19.7485"/>
 <element name="U$4" library="logo" package="LOGO_25X25_SILK" value="LOGO_25X25_SILK" x="46.7995" y="4.191" rot="MR0"/>
 <element name="POWER_USB" library="Spark" package="USB-MICROB-SMT-DIP" value="USBUSB-MICROB-SMT-DIP" x="42.037" y="52.705" smashed="yes" rot="R180">
-<attribute name="NAME" x="45.3515" y="48.2655" size="0.762" layer="25" rot="R180"/>
+<attribute name="NAME" x="45.3515" y="48.583" size="0.762" layer="25" rot="R180"/>
 <attribute name="VALUE" x="43.942" y="55.98" size="0.762" layer="27" rot="R180"/>
 </element>
 </elements>
@@ -3258,9 +3250,9 @@ design rules under a new name.</description>
 <wire x1="39.8145" y1="35.1155" x2="37.0815" y2="35.1155" width="0.254" layer="16"/>
 <wire x1="37.0815" y1="35.1155" x2="36.957" y2="35.24" width="0.254" layer="16"/>
 <wire x1="43.942" y1="42.164" x2="42.799" y2="43.307" width="1.016" layer="1"/>
-<wire x1="42.799" y1="43.307" x2="42.799" y2="47.8155" width="1.016" layer="1"/>
-<via x="42.799" y="47.8155" extent="1-16" drill="0.6"/>
-<wire x1="42.799" y1="47.8155" x2="42.799" y2="48.7045" width="1.016" layer="16"/>
+<wire x1="42.799" y1="43.307" x2="42.799" y2="47.117" width="1.016" layer="1"/>
+<via x="42.799" y="47.117" extent="1-16" drill="0.6"/>
+<wire x1="42.799" y1="47.117" x2="42.799" y2="48.7045" width="1.016" layer="16"/>
 <wire x1="42.799" y1="48.7045" x2="42.418" y2="49.0855" width="1.016" layer="16"/>
 <via x="43.942" y="42.164" extent="1-16" drill="0.6"/>
 <wire x1="43.942" y1="42.164" x2="43.8785" y2="42.2275" width="1.016" layer="16"/>
