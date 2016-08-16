@@ -12080,7 +12080,7 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <part name="C26" library="rcl" deviceset="C-EU" device="C0805" value="10uF"/>
 <part name="D1" library="diode" deviceset="BAS40" device=""/>
 <part name="GND40" library="supply1" deviceset="GND" device=""/>
-<part name="U2" library="JKW_CHIP" deviceset="LP5907MFX" device=""/>
+<part name="U2" library="JKW_CHIP" deviceset="LP5907MFX" device="" value="LP5907MFX-1.8"/>
 <part name="C27" library="rcl" deviceset="C-EU" device="C0805" value="1u"/>
 <part name="C28" library="rcl" deviceset="C-EU" device="C0805" value="1u"/>
 <part name="GND41" library="supply1" deviceset="GND" device=""/>

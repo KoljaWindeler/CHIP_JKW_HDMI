@@ -3176,7 +3176,7 @@ design rules under a new name.</description>
 <attribute name="NAME" x="23.3172" y="0.762" size="0.8128" layer="26" rot="MR0"/>
 <attribute name="VALUE" x="20.7772" y="6.9088" size="1.27" layer="28" rot="MR180"/>
 </element>
-<element name="U2" library="JKW_CHIP" package="SOT23-5" value="LP5907MFX" x="7.3406" y="35.179" smashed="yes">
+<element name="U2" library="JKW_CHIP" package="SOT23-5" value="LP5907MFX-1.8" x="7.3406" y="35.179" smashed="yes">
 <attribute name="VALUE" x="5.789" y="30.7594" size="2.032" layer="27" font="vector" ratio="13" rot="SR0"/>
 </element>
 <element name="C27" library="rcl" package="C0805" value="1u" x="7.2898" y="39.1414" smashed="yes">

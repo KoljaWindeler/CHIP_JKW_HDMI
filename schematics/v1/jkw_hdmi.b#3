@@ -79,6 +79,7 @@
 <layer number="114" name="Badge_Outline" color="7" fill="1" visible="no" active="yes"/>
 <layer number="115" name="ReferenceISLANDS" color="7" fill="1" visible="no" active="yes"/>
 <layer number="116" name="Patch_BOT" color="9" fill="4" visible="yes" active="yes"/>
+<layer number="117" name="kolja1" color="13" fill="1" visible="yes" active="yes"/>
 <layer number="118" name="Rect_Pads" color="7" fill="1" visible="no" active="yes"/>
 <layer number="121" name="_tsilk" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="122" name="_bsilk" color="7" fill="1" visible="yes" active="yes"/>
@@ -2139,6 +2140,7 @@
 <rectangle x1="12.4206" y1="14.351" x2="21.1582" y2="14.3764" layer="25" rot="R90"/>
 <rectangle x1="16.7259" y1="18.8341" x2="16.8529" y2="18.8595" layer="25" rot="R90"/>
 <rectangle x1="16.764" y1="18.9484" x2="16.8148" y2="18.9738" layer="25" rot="R90"/>
+<text x="9.2202" y="10.8458" size="1.778" layer="19" rot="R90">ordered 2016/07/12</text>
 </plain>
 <libraries>
 <library name="SII164CTG64">
