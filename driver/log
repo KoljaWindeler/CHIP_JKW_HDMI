@@ -1,0 +1,67 @@
+[CAT6612] VICID 19, input color 0, input signal 0, output color 0
+return ca 
+return 11 
+return 16 
+Device ok
+resetting
+set reg 0f to 00
+set reg 04 to 3d
+set reg 04 to 1d
+enabling clock ring
+set reg 61 to 10
+turning all packets off
+set reg c9 to 00
+set reg ca to 00
+set reg cb to 00
+set reg cc to 00
+set reg cd to 00
+set reg ce to 00
+set reg cf to 00
+set reg d0 to 00
+setting DDC por to PC tunnel
+set reg 10 to 01
+set reg 0f to 00
+setting color mode
+[CAT6612] 0x70 write value 0
+set reg 70 to 00
+set reg 0f to 00
+[CAT6612]: rgb to rgb bypass
+set reg 72 to 00
+switching to hdmi mode
+set reg c0 to 01
+set reg 0f to 00
+set reg 61 to 10
+set reg 62 to 89
+set reg 63 to 01
+set reg 64 to 56
+set reg 65 to 00
+return 04 
+set reg 04 to 04
+checking video signal
+return 7c 
+[CAT6112] video stable!
+enabled driver
+set reg 04 to 15
+set reg 0f to 00
+set reg 61 to 00
+set reg 0f to 01
+set reg 58 to 10
+set reg 59 to 68
+set reg 5a to 00
+set reg 5b to 13
+set reg 5c to 00
+set reg 5e to 00
+set reg 5f to 00
+set reg 60 to 00
+set reg 61 to 00
+set reg 62 to 00
+set reg 63 to 00
+set reg 64 to 00
+set reg 65 to 00
+set reg 5d to e4
+set reg 0f to 00
+set reg cd to 03
+cat6612: AVI Info 19, csum e4
+disabling mute
+set reg c1 to 00
+set reg c6 to 03
