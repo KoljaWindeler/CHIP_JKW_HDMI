@@ -123,7 +123,7 @@ static int reg_read(const uint8_t reg)
          printf(buffer);
          printf("\n\n");
      } else {
-         printf("return %02x \n",buf[0]);
+         printf("get reg %02x: %02x \n",reg,buf[0]);
      }
      close(file);
 
@@ -322,6 +322,17 @@ static void SetInputMode(unsigned char VICID, unsigned char inputColorMode, unsi
         reg_write( _A1_VSE1,    SyncEmbTable[i].RegVSE1);
         reg_write( _A2_VSS2,    SyncEmbTable[i].RegVSS2);
         reg_write( _A3_VSE2,    SyncEmbTable[i].RegVSE2);
+    } else {
+	printf("de and sync included, skipping 90-a3");
+        reg_write(0x72,0x00);
+        reg_write(0x90,0x00);
+        reg_write(0x61,0x03);
+        reg_write(0x71,0x01);
+        reg_write(0x62,0x18);
+        reg_write(0x63,0x10);
+        reg_write(0x64,0x0c);
+        reg_write(0x71,0x00);
+
     }
 
 	printf("setting color mode\n");
@@ -346,7 +357,7 @@ static void SetInputMode(unsigned char VICID, unsigned char inputColorMode, unsi
 
         value |= (1<<3);
     }
-    printf("[CAT6612] 0x70 write value %x\n", value);
+    printf("[CAT6612] 0x70 write value %x - should be 0x00?\n", value);
     //07-06: Input color mode, 0/1/2=RGB/YUV422/YUV444 (default:0)
     //04-04: 0/1=non-CCIR656/CCIR656 (default:0)
     //03-03: 0/1=sync separate/embedded mode (default:0)
@@ -444,6 +455,7 @@ static void SetCSC(unsigned char inputColorMode, unsigned char outputColorMode)
     //06-06: 0/1=enable Cr/Cb up/down sampling function (default:0)
     //05-05: 0/1=Dither noise pattern (default:0)
     //01-00: 0/2/3=none/rgb2yuv/yuv2rgb (default:0)
+	printf("setting 72 to %02x should be 00\n",cscsel);
     reg_write( _72_CSCCtrl, cscsel);
 }
 
@@ -478,14 +490,15 @@ static void setupAFE(int clock_freq)
 static void fireAFE(void)
 {
     reg_write( _0F_BankSel    ,0x00);
-    reg_write( _61_AFEDrvCtrl ,0x00);
+    reg_write( _61_AFEDrvCtrl ,0x03);
 }
 
 int main(){
     HDMI_Video_ID VICID=19; // 1280 x 720 but doesn't matter
-    int clock_freq=90; // 1280*720*50 = 46.08 Mhz < 80
+    int clock_freq=65; // 1280*720*50 = 46.08 Mhz < 80 .. measured .. it is 65mHz
     unsigned char inputColorMode = FORMAT_RGB444;
-    unsigned char inputSignalType=INSIG_SYNCSEP; // hsync and vsync ok
+//    unsigned char inputSignalType=INSIG_SYNCSEP; // hsync and vsync ok
+    unsigned char inputSignalType=INSIG_SYNCEMB; // hsync and vsync ok
     unsigned char outputColorMode = FORMAT_RGB444; // we fix output color to YUV422 cause HDMI Rx CAT6011 was changed.
     int ret, i;
     printf("[CAT6612] VICID %d, input color %d, input signal %d, output color %d\n", VICID, inputColorMode, inputSignalType, outputColorMode);
@@ -525,10 +538,144 @@ int main(){
     reg_write( _CF_SPDInfoPkt         ,0x00);
     reg_write( _D0_MpgInfoPkt         ,0x00);
 
+
+	// lets enabled a few interrupts
+	printf("activating interrupt\n");
+    uint8_t uc;
+// 09[0] = 0 <-- activates event for hot plug
+    uc = reg_read( 0x09);
+    uc &= ~(1<<0);
+    reg_write( 0x09, uc);
+	sleep(1);
+
+// 09[1] = 0 <-- activates event for rx sensing
+    uc = reg_read( 0x09);
+    uc &= ~(1<<1);
+    reg_write( 0x09, uc);
+	sleep(1);
+
+//0b[3] = 1 <-- activates event for video stableasd
+	uc = reg_read( 0x0b);
+	uc &= ~(1<<3);
+	reg_write( 0x0b, uc);
+	sleep(1);
+	uint8_t stage = 0;
+	printf("checking for interrupt\n");
+	for(i = 0 ; i < 10 ; i++)
+	{
+        	if(reg_compare(_0E_SysStat, 0x80, 0x80) == 0) // mask hinten
+	        {
+	        	printf("[CAT6112] Interrupt!\n");
+			printf("getting interrupt reason\n");
+	        	if( stage==0 && reg_compare(0x06, 0x01, 0x01) == 0) // mask hinten
+			{
+				printf("hotplug interrupt\n");
+		        	if( reg_compare(0x0e, 0x40, 0x40) == 0) // mask hinten
+				{
+					printf("PLUGGED IN\n");
+					printf("clearing interrupt\n");
+					// interrupt clear mode
+					uc = reg_read( 0x0e);
+					uc |= (1<<0);
+					reg_write( 0x0e, uc);
+
+					// clear flag 0x00 from 0x0c
+					uc = reg_read( 0x0c);
+					uc |= (1<<0);
+					reg_write( 0x0c, uc);
+
+					// leave interrupt clear mode
+					uc = reg_read( 0x0e);
+					uc &= ~(1<<0);
+					reg_write( 0x0e, uc);
+					
+					stage++;
+				}
+				else
+				{
+					printf("unplugged");
+				}
+			}
+			else if(stage==1 && reg_compare(0x06, 0x02, 0x02) == 0) // mask hinten
+			{
+				printf("rx sensing interrupt\n");
+			        if( reg_compare(0x0e, 0x20, 0x20) == 0) // mask hinten
+				{
+					printf("rx on\n");
+					// interrupt clear mode
+					uc = reg_read( 0x0e);
+					uc |= (1<<0);
+					reg_write( 0x0e, uc);
+
+					// clear flag 0x01 from 0x0c
+					uc = reg_read( 0x0c);
+					uc |= (1<<1);
+					reg_write( 0x0c, uc);
+
+					// leave interrupt clear mode
+					uc = reg_read( 0x0e);
+					uc &= ~(1<<0);
+					reg_write( 0x0e, uc);
+		
+					stage++;
+
+				}
+				else
+				{
+					printf("rx off");
+				}
+			}
+			else if( reg_compare(0x08, 0x10, 0x10) == 0) // mask hinten
+			{
+				printf("video stable interrupt\n");
+			        if( reg_compare(0x0e, 0x10, 0x10) == 0) // mask hinten
+				{
+					printf("stable video\n");
+					break;
+				}
+				else
+				{
+					printf("video not longer stable");
+				}
+			}
+		}
+		else
+		{
+		        printf("[CAT6112] no interrupt!\n");
+		        sleep(1);
+		}
+	}
+
+
+
+
+
+
     //initialize done
+	printf("checking bstatus:\n");
+reg_write(0x10,0x01);
+reg_write(0x11,0x74);
+reg_write(0x12,0x41);
+reg_write(0x13,0x02);
+reg_write(0x15,0x00);
+    ret = reg_compare(0x16, 0x82, 0x80);
+    if (ret<0){
+	printf("error fetching bstatus of fifo empty\n");
+	sleep(1);
+    } else {
+	ret = reg_compare(0x45, 0x10, 0x10);
+	if (ret<0){
+		printf("bstatus: hdmi\n");
+	} else {
+		printf("bstatus: dvi\n");
+		sleep(3);
+	}
+    }
 
     // Check HDMI sink capability, should read from EDID
     // not support now, manual set
+	
+
     // Switch to PC program DDC mode
 	printf("setting DDC por to PC tunnel\n");
     reg_write( _10_MasterSel          ,0x01);
@@ -552,7 +699,7 @@ int main(){
 
     //Wait for video stable input
 	printf("checking video signal\n");
-    for(i = 0 ; i < 100 ; i++)
+    for(i = 0 ; i < 10 ; i++)
     {
         if( reg_compare(_0E_SysStat, 0x10, 0x10) == 0)
         {
@@ -566,15 +713,15 @@ int main(){
 	printf("enabled driver\n");
 
     // HDMITX VCLK Reset Disable
-    reg_write(_04_RstCtrl     ,0x15);
+    reg_write(_04_RstCtrl     ,0x15); // 00[0]1 [0]101
 
     // Enable HDMITX AFE after video stable
     fireAFE();
     config_AVI_InfoFrame(VICID, outputColorMode);
 
     // Disable AVMute to start output
-	printf("disabling mute\n");
-    reg_write( _C1_Mute               ,0x00);
+	printf("disabling mute send info frame\n");
+    reg_write( _C1_Mute               ,0x80);
     reg_write( _C6_GenCtrlPkt, 1|(1<<1));
     return 0;
 }
